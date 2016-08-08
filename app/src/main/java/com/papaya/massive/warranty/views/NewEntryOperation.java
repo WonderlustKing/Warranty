@@ -9,4 +9,5 @@ public interface NewEntryOperation {
 
     void showDatePicker(int edittext);
     void showToast(String message);
+    void returnToMainActivity();
 }

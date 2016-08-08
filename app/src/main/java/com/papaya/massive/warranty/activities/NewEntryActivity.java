@@ -1,6 +1,7 @@
 package com.papaya.massive.warranty.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -156,6 +157,12 @@ public class NewEntryActivity extends AppCompatActivity implements NewEntryOpera
     @Override
     public void showToast(String message) {
         Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void returnToMainActivity() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
     DatePickerDialog.OnDateSetListener ondateBuy = new DatePickerDialog.OnDateSetListener() {
