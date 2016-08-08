@@ -7,11 +7,13 @@ public class ProductInfo {
     private String name;
     private int days_left;
     private int color;
+    private int progressbarPetcent;
 
-    public ProductInfo(String name, int days_left, int color) {
+    public ProductInfo(String name, int days_left, int color,int progressnarPercent) {
         this.name = name;
         this.days_left = days_left;
         this.color = color;
+        this.progressbarPetcent = progressnarPercent;
     }
 
     public String getName() {
@@ -36,5 +38,13 @@ public class ProductInfo {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getProgressbarPetcent() {
+        return progressbarPetcent;
+    }
+
+    public void setProgressbarPetcent(int progressbarPetcent) {
+        this.progressbarPetcent = progressbarPetcent;
     }
 }

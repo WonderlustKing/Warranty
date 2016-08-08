@@ -16,12 +16,13 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "warrantydb";
 
     private static final String PRODUCTS_TABLE = "products";
 
     private static final String KEY_ID = "id";
+    private static final String KEY_TYPE = "type";
     private static final String KEY_NAME = "title";
     private static final String KEY_BUY_DATE = "date_buy";
     private static final String KEY_EXPIRE_DATE = "date_expire";
@@ -34,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_PRODUCTS = "CREATE TABLE " + PRODUCTS_TABLE
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_TYPE + " TEXT,"
             + KEY_NAME + " TEXT,"
             + KEY_BUY_DATE +" INTEGER,"
             + KEY_EXPIRE_DATE+" INTEGER,"
@@ -62,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertProduct(ProductDB product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(KEY_TYPE, product.getType());
         values.put(KEY_NAME,product.getTitle());
         values.put(KEY_BUY_DATE, product.getDate_buy());
         values.put(KEY_EXPIRE_DATE, product.getDate_expire());
@@ -76,9 +79,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public List<ProductDB> getProducts(){
+    public List<ProductDB> getAllProducts(){
         List<ProductDB> productsdb = new ArrayList<ProductDB>();
-        String query = "SELECT * FROM products";
+        String query = " SELECT * FROM products WHERE type = 'VALID' ";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
@@ -86,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(c.moveToFirst()){
             do{
                 ProductDB product = new ProductDB();
+                product.setType(c.getString(c.getColumnIndex(KEY_TYPE)));
                 product.setTitle(c.getString(c.getColumnIndex(KEY_NAME)));
                 product.setDate_buy(c.getInt(c.getColumnIndex(KEY_BUY_DATE)));
                 product.setDate_expire(c.getInt(c.getColumnIndex(KEY_EXPIRE_DATE)));

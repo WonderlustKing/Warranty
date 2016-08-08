@@ -1,6 +1,7 @@
 package com.papaya.massive.warranty.Adapters;
 
 import android.animation.ValueAnimator;
+import android.media.Image;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +32,10 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.info_text) TextView name_text;
     @BindView(R.id.days_left_textv) TextView days_left_text;
     @BindView(R.id.expires_tv) TextView expires;
+    @BindView(R.id.bought_at_tv) TextView bought;
+    @BindView(R.id.three_dots_card) ImageView three_dots_img;
+    @BindView(R.id.favore_card) ImageView favorite_img;
+    @BindView(R.id.notification_card) ImageView notification_img;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.more_btn) Button more;
 
@@ -98,6 +104,9 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void run() {
                 expires.setVisibility(View.VISIBLE);
+                bought.setVisibility(View.VISIBLE);
+                favorite_img.setVisibility(View.VISIBLE);
+                notification_img.setVisibility(View.VISIBLE);
                 //progressBar.setVisibility(View.VISIBLE);
                // days_left_text.setVisibility(View.VISIBLE);
             }
@@ -130,6 +139,9 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void run() {
                 expires.setVisibility(View.INVISIBLE);
+                bought.setVisibility(View.INVISIBLE);
+                favorite_img.setVisibility(View.INVISIBLE);
+                notification_img.setVisibility(View.INVISIBLE);
                // progressBar.setVisibility(View.VISIBLE);
                 //days_left_text.setVisibility(View.VISIBLE);
 

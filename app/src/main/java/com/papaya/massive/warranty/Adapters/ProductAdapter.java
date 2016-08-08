@@ -37,7 +37,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         }else {
             holder.days_left_text.setText(Integer.toString(pi.getDays_left()) + " days left");
             int progress = (int) (100 - pi.getDays_left() * 0.1);
-            holder.progressBar.setProgress(progress);
+            holder.progressBar.setProgress(pi.getProgressbarPetcent());
         }
     }
 
