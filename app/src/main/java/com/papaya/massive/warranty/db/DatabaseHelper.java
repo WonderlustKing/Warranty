@@ -79,6 +79,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateProductToExpired(ProductDB product){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TYPE, "EXPIRED");
+        values.put(KEY_NAME,product.getTitle());
+        values.put(KEY_BUY_DATE, product.getDate_buy());
+        values.put(KEY_EXPIRE_DATE, product.getDate_expire());
+        values.put(KEY_STORE, product.getStore());
+        values.put(KEY_NOTE, product.getNote());
+        values.put(KEY_NOTIFICATIONDAY, product.getNotification_day());
+        values.put(KEY_NOTIFICATION, product.isNotification());
+        values.put(KEY_PRICE, product.getPrice());
+
+        long update = db.update(PRODUCTS_TABLE,values,"title="+product.getTitle(),null);
+        if(update == -1) return false;
+        return true;
+    }
+
     public List<ProductDB> getAllProducts(){
         List<ProductDB> productsdb = new ArrayList<ProductDB>();
         String query = " SELECT * FROM products WHERE type = 'VALID' ";

@@ -43,7 +43,7 @@ public class NewEntryPresenterImp implements NewEntryPresenter {
         product.setPrice(Double.parseDouble(price_text));
         boolean flag = db.insertProduct(product);
         if (flag) {
-            operation.returnToMainActivity(); 
+            operation.returnToMainActivity();
             //operation.showToast("Product saved");
         }else {
             operation.showToast("Something go wrong");

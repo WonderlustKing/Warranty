@@ -9,9 +9,12 @@ import com.papaya.massive.warranty.models.ProductDB;
 import com.papaya.massive.warranty.models.ProductInfo;
 import com.papaya.massive.warranty.views.CardViewOperation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by christos on 30/6/2016.
@@ -30,18 +33,19 @@ public class CardPresenterImp implements CardPresenter {
     @Override
     public void getValidProducts() {
         List<ProductInfo> productInfos = new ArrayList<ProductInfo>();
-        //productInfos.add(new ProductInfo("Product1",20,0xffff0000));
-        //productInfos.add(new ProductInfo("Product2",200,0xff00ff00));
-        //productInfos.add(new ProductInfo("Moto G",0,0xff666666));
         List<ProductDB> productDBs = dbHelper.getAllProducts();
         for(ProductDB productDB : productDBs){
-            int prog = 100 - getProgressPrc(productDB);
-            if(prog <= 10) {
-                productInfos.add(new ProductInfo(productDB.getTitle(), getDaysLeft(productDB), 0xffF04646, getProgressPrc(productDB)));
-            }else if(prog <= 25){
-                productInfos.add(new ProductInfo(productDB.getTitle(), getDaysLeft(productDB), 0xffE7F046, getProgressPrc(productDB)));
-            }else productInfos.add(new ProductInfo(productDB.getTitle(), getDaysLeft(productDB), 0xff46F07B, getProgressPrc(productDB)));
-
+            int days_left = getDaysLeft(productDB);
+            if(days_left > 0) {
+                String expire_date = fromUnixTimeToDate(productDB.getDate_expire());
+                int prog = 100 - getProgressPrc(productDB);
+                if (prog <= 10) {
+                    productInfos.add(new ProductInfo(productDB.getTitle(), days_left, 0xffF04646, getProgressPrc(productDB),productDB.getStore(),expire_date));
+                } else if (prog <= 25) {
+                    productInfos.add(new ProductInfo(productDB.getTitle(), days_left, 0xffE7F046, getProgressPrc(productDB),productDB.getStore(),expire_date));
+                } else
+                    productInfos.add(new ProductInfo(productDB.getTitle(), days_left, 0xff46F07B, getProgressPrc(productDB),productDB.getStore(),expire_date));
+            }
         }
         if(productInfos.size() == 0){
             Toast.makeText(context,"No products yet", Toast.LENGTH_LONG).show();
@@ -79,6 +83,7 @@ public class CardPresenterImp implements CardPresenter {
     public int getDaysLeft(ProductDB product) {
         int diffInDays = (int)( (product.getDate_expire() - Calendar.getInstance().getTimeInMillis() / 1000)
                 / 86400 );
+        if(diffInDays == 0) dbHelper.updateProductToExpired(product);
         return diffInDays;
     }
 
@@ -91,5 +96,12 @@ public class CardPresenterImp implements CardPresenter {
         int pr = (int) progress;
         Log.d("progress",""+progress);
         return pr;
+    }
+
+    private String fromUnixTimeToDate(long time){
+        Date date = new java.util.Date((long)time*1000);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMM yyyy", Locale.getDefault());
+        String formatted = dateFormat.format(date);
+        return formatted;
     }
 }

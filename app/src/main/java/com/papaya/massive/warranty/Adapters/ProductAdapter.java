@@ -31,12 +31,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         ProductInfo pi = productList.get(position);
         holder.cardView.setCardBackgroundColor(pi.getColor());
         holder.name_text.setText(pi.getName());
+        holder.bought.setText("Bought at "+pi.getBought_at());
+        holder.expires.setText("Expires in "+pi.getExpire_date());
         if(pi.getDays_left() == 0){
             holder.days_left_text.setText("EXPIRED");
             holder.progressBar.setVisibility(View.INVISIBLE);
         }else {
             holder.days_left_text.setText(Integer.toString(pi.getDays_left()) + " days left");
-            int progress = (int) (100 - pi.getDays_left() * 0.1);
             holder.progressBar.setProgress(pi.getProgressbarPetcent());
         }
     }

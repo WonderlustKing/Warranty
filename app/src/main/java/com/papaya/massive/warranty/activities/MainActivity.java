@@ -103,14 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 }, 900);
 
 
-                //newEntryActivity();
             }
         });
 
     }
 
-    public void newEntryActivity(){
-        Intent intent = new Intent(this,NewEntryActivity.class);
-        startActivity(intent);
-    }
+
 }

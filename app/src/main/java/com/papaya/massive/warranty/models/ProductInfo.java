@@ -8,12 +8,16 @@ public class ProductInfo {
     private int days_left;
     private int color;
     private int progressbarPetcent;
+    private String bought_at;
+    private String expire_date;
 
-    public ProductInfo(String name, int days_left, int color,int progressnarPercent) {
+    public ProductInfo(String name, int days_left, int color,int progressnarPercent, String bought_at,String expire_date) {
         this.name = name;
         this.days_left = days_left;
         this.color = color;
         this.progressbarPetcent = progressnarPercent;
+        this.bought_at = bought_at;
+        this.expire_date = expire_date;
     }
 
     public String getName() {
@@ -46,5 +50,21 @@ public class ProductInfo {
 
     public void setProgressbarPetcent(int progressbarPetcent) {
         this.progressbarPetcent = progressbarPetcent;
+    }
+
+    public String getBought_at() {
+        return bought_at;
+    }
+
+    public void setBought_at(String bought_at) {
+        this.bought_at = bought_at;
+    }
+
+    public String getExpire_date() {
+        return expire_date;
+    }
+
+    public void setExpire_date(String expire_date) {
+        this.expire_date = expire_date;
     }
 }
